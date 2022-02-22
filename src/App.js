@@ -2,9 +2,14 @@ import logo from "./logo.svg";
 import "./App.css";
 
 import { inject, observer } from "mobx-react";
+import { useCallback, useEffect } from "react";
 
-function App({ add, sub }) {
-  console.log("render");
+function App({ add, sub, database }) {
+  console.log(database.Database);
+
+  useEffect(() => {
+    database.datainflow();
+  }, [database]);
   return (
     <div className="App">
       <header className="App-header">
@@ -14,6 +19,7 @@ function App({ add, sub }) {
           {add.add2}
           {sub.sub1}
           {sub.sub2}
+          {database.Database}
         </p>
         <button onClick={click}>증가</button>
       </header>
@@ -26,4 +32,4 @@ function App({ add, sub }) {
   }
 }
 
-export default inject("add", "sub")(observer(App));
+export default inject("add", "sub", "database")(observer(App));
